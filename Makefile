@@ -1,72 +1,67 @@
-NAME = 	cube_3D
+NAME = cube_3D
 
-CFLAGS = -Wall -Wextra -Werror -I$(INCLUDES) -I$(LIBFT_DIR) -I$(MLX_DIR) -g3
+# Obtenir les dimensions de l'écran
+SCREEN_WIDTH := $(shell xdpyinfo | grep dimensions | awk '{print $$2}' | cut -d 'x' -f 1)
+SCREEN_HEIGHT := $(shell xdpyinfo | grep dimensions | awk '{print $$2}' | cut -d 'x' -f 2)
 
-EXT_FLAGS = -lX11 -lm -lz -lXext
-
-OPTI_FLAGS = -Ofast -march=native -flto -fno-signed-zeros -funroll-loops
-
-DFLAGS = -MMD -MP
-
+# Directories
 LIBFT_DIR = libft
-
-LIBFT = libft.a
-
 MLX_DIR = minilibx-linux
-
-MLX = libmlx.a
-
 SRC_DIR = srcs
-
 BUILD_DIR = .build
-
-SRC_FILES = main.c \
-			game.c \
-
 INCLUDES = includes
 
-SRC = $(addprefix $(SRC_DIR)/, SRC_FILES)
+# Files
+LIBFT = libft.a
+MLX = libmlx.a
 
+SRC_FILES = main.c \
+			init.c \
+			game.c \
+			quit_game_with_esc_or_cross.c \
+			safe_exit.c \
+
+SRC = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 OBJ = $(addprefix $(BUILD_DIR)/, $(SRC_FILES:.c=.o))
-
 DEPS = $(OBJ:.o=.d)
 
-.PHONY: all
-all : $(NAME)
+# Compiler flags
+CFLAGS = -Wall -Wextra -Werror -I$(INCLUDES) -I$(LIBFT_DIR) -I$(MLX_DIR) -g3
+SCREEN_FLAGS = -D SCREEN_WIDTH=$(SCREEN_WIDTH) -D SCREEN_HEIGHT=$(SCREEN_HEIGHT)
+LDFLAGS = -L$(LIBFT_DIR) -lft -L$(MLX_DIR) -lmlx -lX11 -lm -lz -lXext
+DFLAGS = -MMD -MP
 
+.PHONY: all clean fclean re mlx libf
 
-$(NAME) :  $(OBJ)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(OPTI_FLAGS) $(LIBFT_DIR)/$(LIBFT) $(MLX_DIR)/$(MLX) $(EXT_FLAGS)
-.PHONY: mlx
-$(MLX_DIR)/$(MLX): FORCE
-	$(MAKE) -C $(MLX_DIR)
+all: $(NAME)
 
-.PHONY: libf
-$(LIBFT_DIR)/$(LIBFT): FORCE
-	$(MAKE) -C $(LIBFT_DIR)
+$(NAME): $(OBJ)
+	$(CC) $(CFLAGS) -o $@ $^ $(SCREEN_FLAGS) $(LDFLAGS)
 
-$(BUILD_DIR)/%.o : $(SRC_DIR)/%.c | $(BUILD_DIR) $(LIBFT_DIR)/$(LIBFT) $(MLX_DIR)/$(MLX)
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(BUILD_DIR) $(LIBFT_DIR)/$(LIBFT) $(MLX_DIR)/$(MLX)
 	$(CC) $(CFLAGS) $(DFLAGS) -o $@ -c $<
 
 $(BUILD_DIR):
-	mkdir -p $(BUILD_DIR)
+	mkdir -p $@
 
 -include $(DEPS)
 
-.PHONY: clean
-clean :
-	$(MAKE) -C $(LIBFT_DIR)/ clean
-	$(MAKE) -C $(MLX_DIR)/ clean
-	$(RM) -r $(BUILD_DIR)
+$(MLX_DIR)/$(MLX): FORCE
+	$(MAKE) -C $(MLX_DIR)
 
-.PHONY: fclean
-fclean : clean
-	$(MAKE) -C $(LIBFT_DIR)/ fclean
-	$(RM) $(NAME)
+$(LIBFT_DIR)/$(LIBFT): FORCE
+	$(MAKE) -C $(LIBFT_DIR)
 
-.PHONY: re
-re : fclean
-	$(MAKE) all
+clean:
+	$(MAKE) -C $(LIBFT_DIR) clean
+	$(MAKE) -C $(MLX_DIR) clean
+	rm -rf $(BUILD_DIR)
+
+fclean: clean
+	$(MAKE) -C $(LIBFT_DIR) fclean
+	rm -f $(NAME)
+
+re: fclean all
 
 .PHONY: FORCE
 FORCE:

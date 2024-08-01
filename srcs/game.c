@@ -1,14 +1,12 @@
-#include <stdio.h>
-#include "mlx.h"
+#include "cube_3D.h"
 
-void	game()
+void	game(t_cube *cube)
 {
-	void	*mlx;
-	void	*mlx_window;
-
-	mlx = mlx_init();
-	mlx_window = mlx_new_window(mlx, 300, 300, "Dodo");
-	if (mlx_window == NULL)
-		return ; //TODO : protection/clean avec exit
-	mlx_loop(mlx);
+	cube->mlx_cube.mlx = mlx_init();
+	cube->mlx_cube.mlx_window = mlx_new_window(cube->mlx_cube.mlx,
+			SCREEN_WIDTH, SCREEN_HEIGHT, "Dodo");
+	if (cube->mlx_cube.mlx_window == NULL)
+		safe_exit(cube);
+	quit_game_with_esc_or_cross(cube);
+	mlx_loop(cube->mlx_cube.mlx);
 }

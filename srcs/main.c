@@ -2,6 +2,9 @@
 
 int	main()
 {
+	t_cube	cube;
+
 	//TODO: parsing
-	game();
+	init(&cube);
+	game(&cube);
 }
