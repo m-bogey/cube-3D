@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   is_whitespace.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ebriere <ebriere@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/16 21:01:06 by ebriere           #+#    #+#             */
-/*   Updated: 2024/10/16 21:01:08 by ebriere          ###   ########.fr       */
+/*   Created: 2024/10/14 17:28:07 by ebriere           #+#    #+#             */
+/*   Updated: 2024/10/14 17:28:08 by ebriere          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube_3D.h"
 
-int	main(int argc, char **argv)
+int	is_whitespace(int c)
 {
-	t_cube	cube;
+	if ((c >= 11 && c <= 13) || c == 32 || c == 9)
+		return (1);
+	return (0);
+}
 
-	(void)argc;
-	ft_memset(&cube, 0, sizeof(t_cube));
-	if (parse_input(&cube, argv) == -1)
+int	str_is_only_white_space(char *str)
+{
+	while (str && *str)
 	{
-		free_details_and_map(&cube);
-		return (-1);
+		if (is_whitespace(*str) != 1)
+			break ;
+		str++;
 	}
-	if (game(&cube) == -1)
-	{
-		free_details_and_map(&cube);
-		return (-1);
-	}
+	if (*str == '\n')
+		return (1);
 	return (0);
 }

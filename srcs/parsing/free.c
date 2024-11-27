@@ -1,32 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ebriere <ebriere@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/16 21:01:06 by ebriere           #+#    #+#             */
-/*   Updated: 2024/10/16 21:01:08 by ebriere          ###   ########.fr       */
+/*   Created: 2024/10/14 17:27:58 by ebriere           #+#    #+#             */
+/*   Updated: 2024/10/14 17:28:00 by ebriere          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube_3D.h"
 
-int	main(int argc, char **argv)
+void	free_tab(char **tab)
 {
-	t_cube	cube;
+	size_t	i;
 
-	(void)argc;
-	ft_memset(&cube, 0, sizeof(t_cube));
-	if (parse_input(&cube, argv) == -1)
+	i = 0;
+	while (tab[i])
 	{
-		free_details_and_map(&cube);
-		return (-1);
+		free(tab[i]);
+		i++;
 	}
-	if (game(&cube) == -1)
-	{
-		free_details_and_map(&cube);
-		return (-1);
-	}
-	return (0);
+	free(tab);
 }

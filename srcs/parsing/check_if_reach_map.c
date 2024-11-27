@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   check_if_reach_map.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ebriere <ebriere@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/16 21:01:06 by ebriere           #+#    #+#             */
-/*   Updated: 2024/10/16 21:01:08 by ebriere          ###   ########.fr       */
+/*   Created: 2024/10/14 17:27:37 by ebriere           #+#    #+#             */
+/*   Updated: 2024/10/14 17:27:39 by ebriere          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube_3D.h"
 
-int	main(int argc, char **argv)
+int	check_if_reach_map(char *str)
 {
-	t_cube	cube;
+	size_t	i;
 
-	(void)argc;
-	ft_memset(&cube, 0, sizeof(t_cube));
-	if (parse_input(&cube, argv) == -1)
+	i = 0;
+	if (str && str_is_only_white_space(str) == 1)
+		return (0);
+	while (str && str[i])
 	{
-		free_details_and_map(&cube);
-		return (-1);
+		if (str[i] != '1' && is_whitespace(str[i]) != 1)
+			break ;
+		i++;
 	}
-	if (game(&cube) == -1)
+	if (str == NULL || str[i] == '\n')
 	{
-		free_details_and_map(&cube);
-		return (-1);
+		return (1);
 	}
 	return (0);
 }

@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbogey <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: mbogey <mbogey@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 13:30:17 by mbogey            #+#    #+#             */
-/*   Updated: 2023/11/22 11:00:45 by mbogey           ###   ########.fr       */
+/*   Updated: 2024/10/21 14:58:09 by mbogey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef LIBFT_H
-# define LIBFT_H
 
-# include <stdlib.h>
-# include <unistd.h>
-# include <limits.h>
-# include <stdio.h>
-# include <stdarg.h>
+#define LIBFT_H
+
+#include <stdlib.h>
+#include <unistd.h>
+#include <limits.h>
+#include <stdio.h>
+#include <stdarg.h>
 
 typedef struct s_list
 {
@@ -68,27 +68,23 @@ void	ft_lstclear(t_list **lst, void (*del)(void*));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
-# define HEXUP "0123456789ABCDEF"
-# define HEXLOW "0123456789abcdef"
-# define DEC "0123456789"
+#define HEXUP "0123456789ABCDEF"
+#define HEXLOW "0123456789abcdef"
+#define DEC "0123456789"
 
-int				ft_printf(const char *format, ...);
-int				ft_putchar(char c, size_t *count);
-int				ft_putnbr(int n, size_t *count);
-int				ft_putstr(char *s, size_t *count);
-int				ft_putunsign(unsigned int nb, size_t *count);
-int				ft_putnbr_base(unsigned int nb, char *base, size_t *count);
-unsigned int	ft_strlen_print(char *s);
-int				ft_print_p(unsigned long i, size_t *count);
+int		ft_printf(const char *format, ...);
+int		ft_putchar(char c, size_t *count);
+int		ft_putnbr(int n, size_t *count);
+int		ft_putstr(char *s, size_t *count);
+int		ft_putunsign(unsigned int nb, size_t *count);
+int		ft_putnbr_base(unsigned int nb, char *base, size_t *count);
+int		ft_strlen_print(char *s);
+int		ft_print_p(unsigned long i, size_t *count);
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
-# endif
+#define BUFFER_SIZE 42
 
 char	*get_next_line(int fd);
 size_t	ft_strlen_n(char *s, char c);
 char	*ft_strdup_gnl(char *s, size_t *nb);
 char	*ft_strjoin_gnl(char *s1, char *s2, size_t *nb);
 void	*ft_memmove_gnl(void *dest, const void *s, ssize_t size);
-
-#endif
