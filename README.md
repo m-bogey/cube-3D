@@ -1,0 +1,1 @@
+Cub3D is a 42 school team graphic design project where you need to create a 3D dynamic view in a maze, inspired by Wolfenstein 3D. Coding in C and using the MiniLibX library, an adaptation of the Xlib library, we must implement ray-casting algorithms. 
