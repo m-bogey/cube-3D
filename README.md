@@ -33,6 +33,6 @@ The program takes a map file as an argument. It should be correctly formated :
 You can find maps in the maps/ directory. Maps in error/ directory are incorrectly formatted. Make sure you use _bonus maps with bonus part only, to avoid an error.
 From the project directory, chose your version of the project, then link the map.
 
-./cub3d test.cub
+./cub3d maps/map.cub
 
 ebriere / m-bogey
